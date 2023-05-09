@@ -7,8 +7,8 @@ A simple text infinite Turn-Based game until you lose the game
 - [ ] Enemy block
 - [x] Enemy level scaling
 - [x] Enemy damage scaling
-- [ ] Player heal
-- [ ] Player block
+- [x] Player heal
+- [x] Player block
 - [x] Player level-up
 - [x] Player damage scaling
 - [x] Exps
