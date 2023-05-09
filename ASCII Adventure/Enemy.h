@@ -14,8 +14,9 @@ private:
 	double health;
 	double damage;
 	int level;
-	bool isDead = false;
 public:
+	bool isDead = false;
+
 	~Enemy();
 
 	void Init(string name, int level);
@@ -27,6 +28,5 @@ public:
 	double GetHealth();
 	double GetDamage();
 	int GetLevel();
-	bool IsDead();
 };
 

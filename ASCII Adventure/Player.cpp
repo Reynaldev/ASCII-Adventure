@@ -35,7 +35,9 @@ void Player::AddExp()
 		this->exp += (this->level * 0.25) * 100;
 	}
 	else {
+		this->isLevelUp = true;
 		this->level++;
+		this->damage += level - 1;
 		this->maxExp += this->level * 100;
 	}
 }
@@ -73,9 +75,4 @@ int Player::GetLevel()
 int Player::GetDamage()
 {
 	return this->damage;
-}
-
-bool Player::IsDead()
-{
-	return this->isDead;
 }

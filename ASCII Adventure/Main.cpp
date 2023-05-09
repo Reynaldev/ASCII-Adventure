@@ -29,7 +29,6 @@ int main() {
 
 	system("cls");
 
-	initEnemy(player);
 	while (!isClosed) {
 		int input;
 
@@ -37,7 +36,7 @@ int main() {
 
 		//playerTurn(player, enemy);
 
-		while (!player.IsDead()) {
+		while (!player.isDead) {
 			cout << enemy.GetName()
 				<< "\nHealth: " << enemy.GetHealth()
 				<< "\nLevel: " << enemy.GetLevel();
@@ -66,21 +65,29 @@ int main() {
 				break;
 			}
 
-			cout << "Enemy turn\n";
-			system("pause");
-			system("cls");
-			player.TakeDamage(enemy.GetDamage());
-			cout << "You take " << enemy.GetDamage() << " damage(s)\n";
-
-			player.Execute();
 			enemy.Execute();
 
-			if (enemy.IsDead()) {
+			if (enemy.isDead) {
 				system("cls");
-				cout << "You win";
+				cout << "You win\n";
 				player.AddExp();
 				enemy.~Enemy();
 				enemy = initEnemy(player);
+			}
+			else {
+				cout << "Enemy turn\n";
+				system("pause");
+				system("cls");
+				player.TakeDamage(enemy.GetDamage());
+				cout << "You take " << enemy.GetDamage() << " damage(s)\n";
+			}
+
+			player.Execute();
+
+			if (player.isLevelUp) {
+				system("cls");
+				cout << "You leveled up!\n";
+				player.isLevelUp = false;
 			}
 
 			system("pause");

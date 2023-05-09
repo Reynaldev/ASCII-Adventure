@@ -47,8 +47,3 @@ int Enemy::GetLevel()
 {
 	return this->level;
 }
-
-bool Enemy::IsDead()
-{
-	return this->isDead;
-}

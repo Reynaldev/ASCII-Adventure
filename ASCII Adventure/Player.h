@@ -16,8 +16,10 @@ private:
 	double exp;
 	int level;
 	int damage;
-	bool isDead = false;
 public:
+	bool isDead = false;
+	bool isLevelUp = false;
+
 	~Player();
 
 	void Init(string newName);
@@ -32,6 +34,5 @@ public:
 	double GetMaxExp();
 	int GetLevel();
 	int GetDamage();
-	bool IsDead();
 };
 
