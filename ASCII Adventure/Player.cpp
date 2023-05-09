@@ -1,5 +1,15 @@
 #include "Player.h"
 
+Player::~Player()
+{
+	this->name = string();
+	this->health = NULL;
+	this->maxExp = NULL;
+	this->exp = NULL;
+	this->level = NULL;
+	this->damage = NULL;
+}
+
 void Player::Init(string newName)
 {
 	this->name = newName;
@@ -13,7 +23,7 @@ void Player::Init(string newName)
 void Player::Execute()
 {
 	if (this->health <= 0) {
-		Died();
+		this->isDead = true;
 	}
 }
 
@@ -28,19 +38,9 @@ void Player::AddExp()
 	}
 }
 
-void Player::Attack(Enemy enemy)
-{
-	enemy.TakeDamage(this->damage);
-}
-
 void Player::TakeDamage(int amount)
 {
 	this->health -= amount;
-}
-
-void Player::Died()
-{
-
 }
 
 string Player::GetName()
@@ -66,4 +66,9 @@ int Player::GetLevel()
 int Player::GetDamage()
 {
 	return this->damage;
+}
+
+bool Player::IsDead()
+{
+	return this->isDead;
 }

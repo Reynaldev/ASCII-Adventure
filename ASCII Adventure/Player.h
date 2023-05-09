@@ -16,19 +16,21 @@ private:
 	double exp;
 	int level;
 	int damage;
+	bool isDead = false;
 public:
+	~Player();
+
 	void Init(string newName);
 	void Execute();
 	void AddExp();
 
-	void Attack();
 	void TakeDamage(int amount);
-	void Died();
 
 	string GetName();
 	double GetHealth();
 	double GetExp();
 	int GetLevel();
 	int GetDamage();
+	bool IsDead();
 };
 

@@ -127,21 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dialogue.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dialogue.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Dialogue_Intro.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

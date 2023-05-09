@@ -14,18 +14,19 @@ private:
 	double health;
 	double damage;
 	int level;
-
+	bool isDead = false;
 public:
-	void Init(string name);
+	~Enemy();
+
+	void Init(string name, int level);
 	void Execute();
 
-	void Attack();
 	void TakeDamage(int amount);
-	void Died();
 
 	string GetName();
 	double GetHealth();
 	double GetDamage();
 	int GetLevel();
+	bool IsDead();
 };
 

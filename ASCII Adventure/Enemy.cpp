@@ -1,22 +1,26 @@
 #include "Enemy.h"
 
-void Enemy::Init(string name)
+Enemy::~Enemy()
+{
+	this->name = string();
+	this->health = NULL;
+	this->damage = NULL;
+	this->level = NULL;
+}
+
+void Enemy::Init(string name, int level)
 {
 	this->name = name;
-	this->health = std::rand() % 10 + 1;
+	this->level = rand() % level + 1;
+	this->health = std::rand() % this->level + 5;
 	this->damage = std::rand() % 5;
 }
 
 void Enemy::Execute()
 {
 	if (this->health <= 0) {
-		Died();
+		this->isDead = true;
 	}
-}
-
-void Enemy::Attack(Player player)
-{
-	player.TakeDamage(this->damage);
 }
 
 void Enemy::TakeDamage(int amount)
@@ -24,6 +28,27 @@ void Enemy::TakeDamage(int amount)
 	this->health -= amount;
 }
 
-void Enemy::Died()
+string Enemy::GetName()
 {
+	return this->name;
+}
+
+double Enemy::GetHealth()
+{
+	return this->health;
+}
+
+double Enemy::GetDamage()
+{
+	return this->damage;
+}
+
+int Enemy::GetLevel()
+{
+	return this->level;
+}
+
+bool Enemy::IsDead()
+{
+	return this->isDead;
 }
