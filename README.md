@@ -10,4 +10,5 @@ A simple text infinite Turn-Based game until you lose the game
 - [ ] Player heal
 - [ ] Player block
 - [x] Player level-up
+- [x] Player damage scaling
 - [x] Exps
