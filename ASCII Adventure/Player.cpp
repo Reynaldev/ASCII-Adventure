@@ -10,10 +10,13 @@ Player::~Player()
 	this->damage = NULL;
 }
 
-void Player::Init(string newName)
+void Player::Init(string name)
 {
-	this->name = newName;
-	this->health = 100;
+	this->name = name;
+	this->maxHealth = 10;
+	this->health = maxHealth;
+	this->maxMana = 50;
+	this->mana = maxMana;
 	this->level = 1;
 	this->exp = 0;
 	this->maxExp = level * 100;
@@ -37,14 +40,32 @@ void Player::AddExp()
 	else {
 		this->isLevelUp = true;
 		this->level++;
+		this->health += 2;
 		this->damage += level - 1;
 		this->maxExp += this->level * 100;
 	}
 }
 
+void Player::AddMana()
+{
+	this->mana += maxMana * .25;
+}
+
+void Player::AddHealth()
+{
+	this->health += maxHealth * .5;
+}
+
+void Player::UseMana(double amount)
+{
+	this->mana -= amount;
+}
+
 void Player::TakeDamage(int amount)
 {
-	this->health -= amount;
+	this->health -= (this->isBlocking) ? 0 : amount;
+
+	this->isBlocking = false;
 }
 
 string Player::GetName()
@@ -55,6 +76,11 @@ string Player::GetName()
 double Player::GetHealth()
 {
 	return this->health;
+}
+
+double Player::GetMana()
+{
+	return this->mana;
 }
 
 double Player::GetExp()

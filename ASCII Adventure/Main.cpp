@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <conio.h>
 
 #include "Player.h"
 
 using std::cout;
 using std::cin;
 using std::string;
+
+Player player;
 
 Enemy initEnemy(Player player) {
 	Enemy enemy;
@@ -19,8 +19,71 @@ Enemy initEnemy(Player player) {
 	return enemy;
 }
 
+void playerTurn(Enemy &enemy) {
+	int input;
+
+	cout << enemy.GetName()
+		<< "\nHealth: " << enemy.GetHealth()
+		<< "\nLevel: " << enemy.GetLevel();
+
+	cout << "\n=================================================================\n\n";
+
+	cout << player.GetName()
+		<< "\nHealth: " << player.GetHealth()
+		<< "\nLevel: " << player.GetLevel()
+		<< "\nMana: " << player.GetMana()
+		<< "\nExp: " << player.GetExp()
+		<< "\nExps to next level: " << player.GetMaxExp();
+
+	cout << "\n=================================================================\n\n";
+
+	cout << "\n1) Attack (0 Mana)"
+		<< "\n2) Heal (25 Mana)"
+		<< "\n3) Block (10 Mana)";
+	cout << "\n>> "; cin >> input;
+
+	system("cls");
+
+	switch (input)
+	{
+	case 1:
+		enemy.TakeDamage(player.GetDamage());
+		cout << "Enemy takes " << player.GetDamage() << " damage(s)\n";
+		break;
+	case 2:
+		if (player.GetMana() < 25) {
+			cout << "Not enough mana\n";
+			system("pause");
+			system("cls");
+			playerTurn(enemy);
+			
+			return;
+		}
+
+		cout << "Player healing by 50%\n";
+		player.AddHealth();
+		player.UseMana(25);
+		break;
+	case 3:
+		if (player.GetMana() < 10) {
+			cout << "Not enough mana\n";
+			system("pause");
+			system("cls");
+			playerTurn(enemy);
+			
+			return;
+		}
+
+		cout << "Player block all damages from the next attack\n";
+		player.isBlocking = true;
+		player.UseMana(10);
+		break;
+	default:
+		break;
+	}
+}
+
 int main() {
-	Player player;
 	string name;
 	bool isClosed = false;
 
@@ -30,40 +93,10 @@ int main() {
 	system("cls");
 
 	while (!isClosed) {
-		int input;
-
 		Enemy enemy = initEnemy(player);
 
-		//playerTurn(player, enemy);
-
 		while (!player.isDead) {
-			cout << enemy.GetName()
-				<< "\nHealth: " << enemy.GetHealth()
-				<< "\nLevel: " << enemy.GetLevel();
-
-			cout << "\n=================================================================\n\n";
-
-			cout << player.GetName()
-				<< "\nHealth: " << player.GetHealth()
-				<< "\nLevel: " << player.GetLevel()
-				<< "\nExp: " << player.GetExp()
-				<< "\nExps till next level: " << player.GetMaxExp();
-
-			cout << "\n=================================================================\n\n";
-
-			cout << "\n1) Attack";
-			cout << "\n>> "; cin >> input;
-
-			switch (input)
-			{
-			case 1:
-				system("cls");
-				enemy.TakeDamage(player.GetDamage());
-				cout << "Enemy takes " << player.GetDamage() << " damage(s)\n";
-				break;
-			default:
-				break;
-			}
+			playerTurn(enemy);
 
 			enemy.Execute();
 
@@ -71,6 +104,7 @@ int main() {
 				system("cls");
 				cout << "You win\n";
 				player.AddExp();
+				player.AddMana();
 				enemy.~Enemy();
 				enemy = initEnemy(player);
 			}
@@ -85,6 +119,7 @@ int main() {
 			player.Execute();
 
 			if (player.isLevelUp) {
+				system("pause");
 				system("cls");
 				cout << "You leveled up!\n";
 				player.isLevelUp = false;
@@ -99,6 +134,11 @@ int main() {
 		cout << "\nYour final score: "
 			<< "\nLevel: " << player.GetLevel()
 			<< "\nExp: " << player.GetExp();
+
+		player.~Player();
+
 		isClosed = true;
 	}
+
+	return 0;
 }

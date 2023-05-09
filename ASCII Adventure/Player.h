@@ -12,6 +12,9 @@ class Player
 private:
 	string name;
 	double health;
+	double maxHealth;
+	double mana;
+	double maxMana;
 	double maxExp;
 	double exp;
 	int level;
@@ -19,17 +22,22 @@ private:
 public:
 	bool isDead = false;
 	bool isLevelUp = false;
+	bool isBlocking = false;
 
 	~Player();
 
-	void Init(string newName);
+	void Init(string name);
 	void Execute();
-	void AddExp();
 
 	void TakeDamage(int amount);
+	void AddExp();
+	void AddMana();
+	void AddHealth();
+	void UseMana(double amount);
 
 	string GetName();
 	double GetHealth();
+	double GetMana();
 	double GetExp();
 	double GetMaxExp();
 	int GetLevel();
