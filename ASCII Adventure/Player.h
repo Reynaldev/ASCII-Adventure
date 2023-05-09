@@ -29,6 +29,7 @@ public:
 	string GetName();
 	double GetHealth();
 	double GetExp();
+	double GetMaxExp();
 	int GetLevel();
 	int GetDamage();
 	bool IsDead();

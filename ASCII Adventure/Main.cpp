@@ -37,7 +37,7 @@ int main() {
 
 		//playerTurn(player, enemy);
 
-		while (!player.IsDead() || !enemy.IsDead()) {
+		while (!player.IsDead()) {
 			cout << enemy.GetName()
 				<< "\nHealth: " << enemy.GetHealth()
 				<< "\nLevel: " << enemy.GetLevel();
@@ -47,7 +47,8 @@ int main() {
 			cout << player.GetName()
 				<< "\nHealth: " << player.GetHealth()
 				<< "\nLevel: " << player.GetLevel()
-				<< "\nExp: " << player.GetExp();
+				<< "\nExp: " << player.GetExp()
+				<< "\nExps till next level: " << player.GetMaxExp();
 
 			cout << "\n=================================================================\n\n";
 
@@ -77,6 +78,7 @@ int main() {
 			if (enemy.IsDead()) {
 				system("cls");
 				cout << "You win";
+				player.AddExp();
 				enemy.~Enemy();
 				enemy = initEnemy(player);
 			}
@@ -84,5 +86,12 @@ int main() {
 			system("pause");
 			system("cls");
 		}
+
+		system("cls");
+		cout << "You lose\n";
+		cout << "\nYour final score: "
+			<< "\nLevel: " << player.GetLevel()
+			<< "\nExp: " << player.GetExp();
+		isClosed = true;
 	}
 }

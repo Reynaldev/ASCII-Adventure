@@ -12,8 +12,8 @@ void Enemy::Init(string name, int level)
 {
 	this->name = name;
 	this->level = rand() % level + 1;
-	this->health = std::rand() % this->level + 5;
-	this->damage = std::rand() % 5;
+	this->health = rand() % this->level + 5;
+	this->damage = rand() % level + 1;
 }
 
 void Enemy::Execute()

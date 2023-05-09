@@ -22,9 +22,11 @@ void Player::Init(string newName)
 
 void Player::Execute()
 {
+	// Health
 	if (this->health <= 0) {
 		this->isDead = true;
 	}
+	// Health
 }
 
 void Player::AddExp()
@@ -56,6 +58,11 @@ double Player::GetHealth()
 double Player::GetExp()
 {
 	return this->exp;
+}
+
+double Player::GetMaxExp()
+{
+	return this->maxExp;
 }
 
 int Player::GetLevel()
