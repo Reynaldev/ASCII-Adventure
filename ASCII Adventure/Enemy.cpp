@@ -6,6 +6,7 @@ Enemy::~Enemy()
 	this->health = NULL;
 	this->damage = NULL;
 	this->level = NULL;
+	this->isDead = false;
 }
 
 void Enemy::Init(string name, int level)

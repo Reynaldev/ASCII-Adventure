@@ -8,9 +8,29 @@ using std::cin;
 using std::string;
 
 Player player;
+Enemy enemy;
+
+Enemy initEnemy(Player player);
+void playerTurn(Enemy &enemy);
+void enemyTurn(Player &player);
+
+int main() {
+	string name;
+	bool isClosed = false;
+
+	cout << "Please enter your name: "; cin >> name;
+	player.Init(name);
+
+	system("cls");
+
+	enemy = initEnemy(player);
+
+	playerTurn(enemy);
+
+	return 0;
+}
 
 Enemy initEnemy(Player player) {
-	Enemy enemy;
 	string enemyName[] = { "Green Ogre", "Deathfly", "Spidey", "Snow Troll" };
 	int enemyNameLen = sizeof(enemyName) / sizeof(string);
 
@@ -19,7 +39,25 @@ Enemy initEnemy(Player player) {
 	return enemy;
 }
 
-void playerTurn(Enemy &enemy) {
+void playerTurn(Enemy& enemy) {
+	if (player.isDead) {
+		system("cls");
+		cout << "You lose\n";
+		cout << "\nYour final score: "
+			<< "\nLevel: " << player.GetLevel()
+			<< "\nExp: " << player.GetExp();
+
+		player.~Player();
+		return;
+	}
+
+	if (player.isLevelUp) {
+		cout << "You leveled up!\n";
+		system("pause");
+		system("cls");
+		player.isLevelUp = false;
+	}
+
 	int input;
 
 	cout << enemy.GetName()
@@ -44,8 +82,7 @@ void playerTurn(Enemy &enemy) {
 
 	system("cls");
 
-	switch (input)
-	{
+	switch (input) {
 	case 1:
 		enemy.TakeDamage(player.GetDamage());
 		cout << "Enemy takes " << player.GetDamage() << " damage(s)\n";
@@ -56,7 +93,7 @@ void playerTurn(Enemy &enemy) {
 			system("pause");
 			system("cls");
 			playerTurn(enemy);
-			
+
 			return;
 		}
 
@@ -70,75 +107,49 @@ void playerTurn(Enemy &enemy) {
 			system("pause");
 			system("cls");
 			playerTurn(enemy);
-			
+
 			return;
 		}
 
-		cout << "Player block all damages from the next attack\n";
+		cout << "Player will block all damages in the next turn.\n";
 		player.isBlocking = true;
 		player.UseMana(10);
 		break;
 	default:
 		break;
 	}
-}
 
-int main() {
-	string name;
-	bool isClosed = false;
-
-	cout << "Please enter your name: "; cin >> name;
-	player.Init(name);
-
+	system("pause");
 	system("cls");
 
-	while (!isClosed) {
-		Enemy enemy = initEnemy(player);
+	enemy.Execute();
+	enemyTurn(player);
+}
 
-		while (!player.isDead) {
-			playerTurn(enemy);
-
-			enemy.Execute();
-
-			if (enemy.isDead) {
-				system("cls");
-				cout << "You win\n";
-				player.AddExp();
-				player.AddMana();
-				enemy.~Enemy();
-				enemy = initEnemy(player);
-			}
-			else {
-				cout << "Enemy turn\n";
-				system("pause");
-				system("cls");
-				player.TakeDamage(enemy.GetDamage());
-				cout << "You take " << enemy.GetDamage() << " damage(s)\n";
-			}
-
-			player.Execute();
-
-			if (player.isLevelUp) {
-				system("pause");
-				system("cls");
-				cout << "You leveled up!\n";
-				player.isLevelUp = false;
-			}
-
-			system("pause");
-			system("cls");
-		}
-
+void enemyTurn(Player& player) {
+	if (enemy.isDead) {
 		system("cls");
-		cout << "You lose\n";
-		cout << "\nYour final score: "
-			<< "\nLevel: " << player.GetLevel()
-			<< "\nExp: " << player.GetExp();
-
-		player.~Player();
-
-		isClosed = true;
+		cout << "You win\n";
+		player.AddExp();
+		player.AddMana();
+		enemy.~Enemy();
+		enemy = initEnemy(player);
+		system("pause");
+		system("cls");
+		playerTurn(enemy);
+		
+		return;
 	}
 
-	return 0;
+	cout << "Enemy turn\n";
+	system("pause");
+	system("cls");
+	player.TakeDamage(enemy.GetDamage());
+	cout << "You take " << enemy.GetDamage() << " damage(s)\n";
+
+	system("pause");
+	system("cls");
+
+	player.Execute();
+	playerTurn(enemy);
 }

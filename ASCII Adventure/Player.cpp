@@ -8,6 +8,7 @@ Player::~Player()
 	this->exp = NULL;
 	this->level = NULL;
 	this->damage = NULL;
+	this->isDead = false;
 }
 
 void Player::Init(string name)
@@ -64,7 +65,6 @@ void Player::UseMana(double amount)
 void Player::TakeDamage(int amount)
 {
 	this->health -= (this->isBlocking) ? 0 : amount;
-
 	this->isBlocking = false;
 }
 
