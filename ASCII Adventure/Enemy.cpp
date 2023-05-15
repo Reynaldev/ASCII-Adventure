@@ -3,6 +3,7 @@
 Enemy::~Enemy()
 {
 	this->name = string();
+	this->maxHealth = NULL;
 	this->health = NULL;
 	this->damage = NULL;
 	this->level = NULL;
@@ -13,7 +14,8 @@ void Enemy::Init(string name, int level)
 {
 	this->name = name;
 	this->level = rand() % level + 1;
-	this->health = rand() % this->level + 5;
+	this->maxHealth = rand() % this->level + 5;
+	this->health = this->maxHealth;
 	this->damage = rand() % level + 1;
 }
 
@@ -26,7 +28,13 @@ void Enemy::Execute()
 
 void Enemy::TakeDamage(int amount)
 {
-	this->health -= amount;
+	this->health -= (this->isBlocking) ? 0 : amount;
+	this->isBlocking = false;
+}
+
+void Enemy::AddHealth()
+{
+	this->health += this->maxHealth * .25;
 }
 
 string Enemy::GetName()

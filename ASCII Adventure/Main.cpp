@@ -42,6 +42,7 @@ Enemy initEnemy(Player player) {
 void playerTurn(Enemy& enemy) {
 	if (player.isDead) {
 		system("cls");
+
 		cout << "You lose\n";
 		cout << "\nYour final score: "
 			<< "\nLevel: " << player.GetLevel()
@@ -53,8 +54,10 @@ void playerTurn(Enemy& enemy) {
 
 	if (player.isLevelUp) {
 		cout << "You leveled up!\n";
+
 		system("pause");
 		system("cls");
+		
 		player.isLevelUp = false;
 	}
 
@@ -129,23 +132,44 @@ void playerTurn(Enemy& enemy) {
 void enemyTurn(Player& player) {
 	if (enemy.isDead) {
 		system("cls");
+		
 		cout << "You win\n";
 		player.AddExp();
 		player.AddMana();
 		enemy.~Enemy();
 		enemy = initEnemy(player);
+
 		system("pause");
 		system("cls");
+		
 		playerTurn(enemy);
 		
 		return;
 	}
 
+	int attack = rand() % 3;
+
 	cout << "Enemy turn\n";
+
 	system("pause");
 	system("cls");
-	player.TakeDamage(enemy.GetDamage());
-	cout << "You take " << enemy.GetDamage() << " damage(s)\n";
+
+	switch (attack) {
+	case 0:
+		player.TakeDamage(enemy.GetDamage());
+		cout << "You take " << enemy.GetDamage() << " damage(s)\n";
+		break;
+	case 1:
+		enemy.AddHealth();
+		cout << "Enemy heals by 25% of max HP.\n";
+		break;
+	case 2:
+		enemy.isBlocking = true;
+		cout << "Enemy ignores all attack in the next turn.\n";
+		break;
+	default:
+		break;
+	}
 
 	system("pause");
 	system("cls");

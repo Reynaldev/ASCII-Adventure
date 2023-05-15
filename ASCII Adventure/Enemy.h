@@ -11,11 +11,13 @@ class Enemy
 {
 private:
 	string name;
+	double maxHealth;
 	double health;
 	double damage;
 	int level;
 public:
 	bool isDead = false;
+	bool isBlocking = false;
 
 	~Enemy();
 
@@ -23,6 +25,7 @@ public:
 	void Execute();
 
 	void TakeDamage(int amount);
+	void AddHealth();
 
 	string GetName();
 	double GetHealth();
